@@ -6,7 +6,7 @@
   };
   
   // kick off mini app
-  let testImagesUrl = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=1800104bf8400142b341d84f76471c7a&photoset_id=72157627669341535&per_page=4&page=8&format=json&nojsoncallback=1',
+  let testImagesUrl = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=21e5e4a88d2aa2bd5a12c929f7647cb7&photoset_id=72157627669341535&per_page=4&page=8&format=json&nojsoncallback=1',
       imageAPI  = IMAGE_APIS.FLICKR;
 
   getImageDataFrom(imageAPI, testImagesUrl)
@@ -75,8 +75,14 @@
         currentSlideIndex : 0
       };
 
-      this.controls.next.addEventListener('click', this.showNext.bind(this));
-      this.controls.prev.addEventListener('click', this.showPrev.bind(this));
+      this.keyBoardNavigation = this.keyBoardNavigation.bind(this);
+      this.show               = this.show.bind(this);
+      this.hide               = this.hide.bind(this);
+      this.showNext           = this.showNext.bind(this);
+      this.showPrev           = this.showPrev.bind(this);
+
+      this.controls.next.addEventListener('click', this.showNext);
+      this.controls.prev.addEventListener('click', this.showPrev);
     }
 
     showSlideAtIndex (index) {
@@ -101,7 +107,7 @@
     show () {
       document.body.classList.add('slideboxed');
       document.body.addEventListener('click', this.hide);
-      document.body.addEventListener('keydown', this.keyBoardNavigation.bind(this));
+      document.body.addEventListener('keydown', this.keyBoardNavigation);
     }
 
     keyBoardNavigation (e) {
