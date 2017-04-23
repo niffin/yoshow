@@ -41,13 +41,31 @@
               thumbEl     = document.createElement('img');
 
         thumbEl.src = image.src;
-        thumbWrapEl.classList.add('thumbnail')
+        thumbWrapEl.classList.add('thumbnail');
 
-        thumbWrapEl.addEventListener('click', e => thumbWrapEl.classList.toggle('lightboxed'));
+        thumbWrapEl.addEventListener('click', showLightboxWithImg(image.src));
 
         thumbWrapEl.appendChild(thumbEl);
         thumbsContainerEl.appendChild(thumbWrapEl);
       });
-    }
+    };
+  }
+
+  function showLightboxWithImg (imgSrc) {
+    return e => {
+      e.stopPropagation();
+      setLightboxImg(imgSrc);
+      document.body.classList.add('lightboxed');
+      document.body.addEventListener('click', hideLightbox);
+    };
+  }
+
+  function setLightboxImg (imgSrc) {
+    document.querySelector('.lightbox img').src = imgSrc;
+  }
+
+  function hideLightbox () {
+    document.body.classList.remove('lightboxed');
+    document.body.removeEventListener('click', hideLightbox);
   }
 })();
