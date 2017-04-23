@@ -1,7 +1,13 @@
-/*
-  NOTES --
-  Implicit dependency on animations.css (can be solved easily with the use of a CSS preprocessor)
- */
+@keyframes nav-hover {
+  from {
+    transform : scale(1);
+  }
+
+  to {
+    transform : scale(1.2);
+  }
+}
+
 
 .slidebox {
   position : absolute;

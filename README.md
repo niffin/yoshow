@@ -1,5 +1,5 @@
 # yoshow
-some sort of a lightbox/slideshow thing.
+Slidebox (lightbox + slideshow) proof-of-concept.
 
 ### features:
 * Carefully curated artistic images from Flickr.
