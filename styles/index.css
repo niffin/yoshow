@@ -56,10 +56,17 @@ html, body {
   height          : calc(100% - 20px);
 }
 
-.slidebox.content img {
-  align-self  : center;
-  height      : auto;
-  user-select : none;
+.slidebox.content .slide-image {
+  align-self          : center;
+  height              : 100%;
+  width               : 100%;
+  user-select         : none;
+  background-repeat   : no-repeat;
+  background-position : center;
+}
+
+.slidebox.content .slide-title {
+  font-size : 20px;
 }
 
 .slidebox.controls {

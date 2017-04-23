@@ -5,15 +5,21 @@
     GOOGLE : 'google'
   };
   
-  // kick off mini app
+  /**
+   * Kick off mini app
+   */
   let testImagesUrl = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=21e5e4a88d2aa2bd5a12c929f7647cb7&photoset_id=72157627669341535&per_page=4&page=8&format=json&nojsoncallback=1',
-      imageAPI  = IMAGE_APIS.FLICKR;
+      imageAPI      = IMAGE_APIS.FLICKR;
 
   getImageDataFrom(imageAPI, testImagesUrl)
     .then(initSlideBox)
     .then(renderThumbnailsTo(document.querySelector('.thumbnails')));
 
-  // application code
+  /**
+   * Application code
+   */
+  
+  // Data services
   function getImageDataFrom (imageAPI, imagesUrl) {
     return fetch(imagesUrl) 
       .then(res => {
@@ -28,15 +34,15 @@
             case IMAGE_APIS.FLICKR :
               return json.photoset.photo.map(extractFlickrImageData);
             default :
-              console.log('This image API (' + imageAPI + ') is not supported at this time. Maybe one day?');
+              alert('This image API (' + imageAPI + ') is not supported at this time. Maybe one day?');
               return [];
           }
         } catch (e) {
-          console.error('Uh oh, looks like Flikr changed the shape of their API response!');
+          alert('Uh oh, looks like Flikr changed the shape of their API response! Or maybe the API key went bad?');
           return [];
         }
       })
-      .catch(console.error);
+      .catch(err => alert(err + '\n\n url - ' + imagesUrl));
   }
 
   function extractFlickrImageData (rawImageAPIResponse) {
@@ -51,7 +57,9 @@
     }
   }
 
+  // SlideBox component
   function initSlideBox (slidesData) {
+    // Need to return these in order to link between SlideBox and thumbnails
     return {
       slidesData,
       slideBox : new SlideBox(slidesData),
@@ -59,10 +67,15 @@
   }
 
   class SlideBox {
-    constructor (slides, selector) {
+    constructor (slides = [], selector) {
+      // SlideBox expects an array of slides in the following shape:
+      // {
+      //    src   : String,
+      //    title : String
+      // }
       this.el = document.querySelector(selector || '.slidebox.container');
       
-      this.img   = this.el.querySelector('img');
+      this.img   = this.el.querySelector('.slide-image');
       this.title = this.el.querySelector('.slide-title');
 
       this.controls = {
@@ -86,9 +99,11 @@
     }
 
     showSlideAtIndex (index) {
-      this.state.currentSlideIndex = index;
-      this.img.src                 = this.state.slides[index].src;
-      this.title.textContent       = this.state.slides[index].title;
+      const currentSlide = this.state.slides[index];
+      
+      this.state.currentSlideIndex   = index;
+      this.img.style.backgroundImage = `url(${ currentSlide.src })`;
+      this.title.textContent         = currentSlide.title;
     }
 
     showNext (e) {
@@ -134,7 +149,7 @@
   }
 
   function renderThumbnailsTo (thumbsContainerEl) {
-    // wishlist : get rid of slideBox dependency 
+    // wishlist : include thumbnails as part of SlideBox
     return ({ slidesData, slideBox }) => {
       slidesData.forEach((image, index) => {
         const thumbWrapEl = document.createElement('div'),
