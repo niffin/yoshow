@@ -4,6 +4,7 @@ some sort of a lightbox/slideshow thing.
 ### features:
 * Carefully curated artistic images from Flickr.
 * Full keyboard navigation - (prev/next on arrow keys, exit on esc).
+* Ability to adjust the number of images pulled through an `imageCount` query param (example - `?imageCount=22`).
 
 ### to see the demo:
 
@@ -14,4 +15,4 @@ some sort of a lightbox/slideshow thing.
 ### possible future features:
 * Fancy show/hide transition.
 * Deeplinking into specific slides.
-* Built-in thumbnail navigation
+* Built-in thumbnail navigation.

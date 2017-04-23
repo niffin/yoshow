@@ -4,13 +4,14 @@
     GIPHY  : 'giphy',
     GOOGLE : 'google'
   };
-  
+
   /**
    * Kick off mini app
    */
-  let numberOfImages = 4,
-      testImagesUrl  = `https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=21e5e4a88d2aa2bd5a12c929f7647cb7&photoset_id=72157627669341535&per_page=${ numberOfImages }&page=8&format=json&nojsoncallback=1`,
-      imageAPI       = IMAGE_APIS.FLICKR;
+  
+  let imageAPI       = IMAGE_APIS.FLICKR,
+      numberOfImages = getNumberOfImagesFromUrl() || 4,
+      testImagesUrl  = `https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=21e5e4a88d2aa2bd5a12c929f7647cb7&photoset_id=72157627669341535&per_page=${ numberOfImages }&page=8&format=json&nojsoncallback=1`;
 
   getImageDataFrom(imageAPI, testImagesUrl)
     .then(initSlideBox)
@@ -42,7 +43,7 @@
               return [];
           }
         } catch (e) {
-          alert('Uh oh, looks like Flikr changed the shape of their API response! Or maybe the API key went bad? The possibilities are endless... \n\n Anyhow, here\'s the error - ' + e);
+          alert('Uh oh, looks like Flikr changed the shape of their API response! \nOr maybe the API key went bad? \nOr maybe the imageCount query param is too large? \n\nThe possibilities are endless... \n\n Anyhow, here\'s the error - ' + e);
           return [];
         }
       })
@@ -63,7 +64,7 @@
 
   // SlideBox component
   function initSlideBox (slidesData) {
-    // Need to return these in order to link between SlideBox and thumbnails
+    // Need to return these in order to allow thumbnails to show SlideBox -- not optimal
     return {
       slidesData,
       slideBox : new SlideBox(slidesData),
@@ -179,4 +180,23 @@
     };
   }
 
+  // Utils -- ideally would be split up into another file and imported using a module loader (ie webpack, browserify, require, etc)
+  function getUrlParams () {
+    const queryParamString = location.search.replace('?', ''), // can also do .substring(1) but I feel like this is more explicit
+          queryParamArray  = queryParamString.split('&');
+
+    return queryParamArray.reduce((params, param) => {
+      const prop = param.split('=')[0],
+            val  = param.split('=')[1];
+
+      params[prop] = val;
+
+      return params;
+    }, {});
+  }
+
+  function getNumberOfImagesFromUrl () {
+    const param = parseInt(getUrlParams().imageCount, 10);
+    return !isNaN(param) ? param : undefined;
+  }
 })();
