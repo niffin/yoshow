@@ -8,8 +8,9 @@
   /**
    * Kick off mini app
    */
-  let testImagesUrl = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=21e5e4a88d2aa2bd5a12c929f7647cb7&photoset_id=72157627669341535&per_page=4&page=8&format=json&nojsoncallback=1',
-      imageAPI      = IMAGE_APIS.FLICKR;
+  let numberOfImages = 4,
+      testImagesUrl  = `https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=21e5e4a88d2aa2bd5a12c929f7647cb7&photoset_id=72157627669341535&per_page=${ numberOfImages }&page=8&format=json&nojsoncallback=1`,
+      imageAPI       = IMAGE_APIS.FLICKR;
 
   getImageDataFrom(imageAPI, testImagesUrl)
     .then(initSlideBox)
@@ -32,13 +33,16 @@
         try {
           switch (imageAPI) {
             case IMAGE_APIS.FLICKR :
+              if (json.stat !== 'ok') {
+                throw Error(json.message);
+              }
               return json.photoset.photo.map(extractFlickrImageData);
             default :
               alert('This image API (' + imageAPI + ') is not supported at this time. Maybe one day?');
               return [];
           }
         } catch (e) {
-          alert('Uh oh, looks like Flikr changed the shape of their API response! Or maybe the API key went bad?');
+          alert('Uh oh, looks like Flikr changed the shape of their API response! Or maybe the API key went bad? The possibilities are endless... \n\n Anyhow, here\'s the error - ' + e);
           return [];
         }
       })
@@ -148,6 +152,7 @@
     }
   }
 
+  // Thumbnails
   function renderThumbnailsTo (thumbsContainerEl) {
     // wishlist : include thumbnails as part of SlideBox
     return ({ slidesData, slideBox }) => {

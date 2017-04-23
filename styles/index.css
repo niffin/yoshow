@@ -9,12 +9,8 @@
 }
 
 html, body {
-  margin          : 0;
-  padding         : 0;
-  height          : 100vh;
-  display         : flex;
-  justify-content : center;
-  align-items     : center;
+  margin     : 0;
+  padding    : 0;
 }
 
 .slidebox {
@@ -34,7 +30,7 @@ html, body {
 .slidebox.container {
   opacity        : 0;
   transition     : opacity .5s;
-  position       : absolute;
+  position       : fixed;
   top            : 0;
   left           : 0;
   width          : 100%;
@@ -96,23 +92,24 @@ html, body {
   transform: rotate(180deg);
 }
 
+.main-content {
+  display         : flex;
+  justify-content : space-around;
+  align-items: center;
+  min-height : 100vh;
+}
+
 .slideboxed .main-content {
   filter     : blur(5px) grayscale(.7);
   opacity    : .3;
   transition : filter, opacity .3s;
 }
 
-.thumbnails {
-  height : 30vh;
-}
-
 .thumbnail {
-  cursor      : pointer;
-  margin      : 1px;
-  flex-grow   : 0;
-  flex-shrink : 0;
-  display     : inline-block;
-  height      : 100%;
+  cursor  : pointer;
+  margin  : 1px;
+  display : inline-block;
+  height  : 200px;
 }
 
 .thumbnail img {
