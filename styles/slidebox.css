@@ -1,0 +1,110 @@
+/*
+  NOTES --
+  Implicit dependency on animations.css (can be solved easily with the use of a CSS preprocessor)
+ */
+
+.slidebox {
+  position : absolute;
+  top      : 0;
+  left     : 0;
+  width    : 100%;
+  height   : 100%;
+}
+
+.slideboxed .slidebox.container {
+  z-index        : 1;
+  opacity        : 1;
+  pointer-events : auto;
+}
+
+.slidebox.container {
+  opacity        : 0;
+  transition     : opacity .5s;
+  position       : fixed;
+  top            : 0;
+  left           : 0;
+  width          : 100%;
+  height         : 100%;
+  pointer-events : none;
+}
+
+.slidebox.dimmer {
+  filter : blur(5px) grayscale(.7);
+}
+
+.slidebox.content {
+  display         : flex;
+  flex-direction  : column;
+  align-items     : center;
+  justify-content : center;
+  top             : 10px;
+  height          : calc(100% - 20px);
+}
+
+.slidebox.content .slide-image {
+  align-self          : center;
+  height              : 100%;
+  width               : 100%;
+  user-select         : none;
+  background-repeat   : no-repeat;
+  background-position : center;
+}
+
+.slidebox.content .slide-title {
+  font-size : 20px;
+}
+
+.slidebox.controls {
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+}
+
+.slidebox.control {
+  width      : auto;
+  height     : auto;
+  position   : static;
+  margin     : 0 20px;
+  cursor     : pointer;
+  z-index    : 2;
+  transition : opacity .4s;
+}
+
+.slidebox.control:hover {
+  animation-name            : nav-hover;
+  animation-iteration-count : infinite;
+  animation-duration        : .5s;
+  animation-direction       : alternate;
+  animation-timing-function : ease-out;
+}
+
+.slidebox.control.prev svg {
+  transform: rotate(180deg);
+}
+
+.slidebox.control svg {
+  height : 100%;
+}
+
+@media (max-width : 640px) {
+  .slidebox.content {
+    flex-direction : column-reverse;
+    justify-content: center;
+  }
+
+  .slidebox.content .slide-image {
+    background-size: contain;
+    width  : calc(100vw - 20px);
+    height : calc(100vh - 150px);
+  }
+
+  .slidebox.controls {
+    align-items     : flex-end;
+    justify-content : center;
+  }
+
+  .slidebox.control {
+    height        : 30px;
+    margin-bottom : 20px;
+  }
+}
