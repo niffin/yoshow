@@ -1,0 +1,37 @@
+* {
+  box-sizing : border-box;
+}
+
+html, body {
+  margin          : 0;
+  padding         : 0;
+  height          : 100vh;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+}
+
+.thumbnails {
+  height : 30vh;
+}
+
+.thumbnail {
+  cursor      : pointer;
+  margin      : 1px;
+  flex-grow   : 0;
+  flex-shrink : 0;
+  display     : inline-block;
+  height      : 100%;
+}
+
+.thumbnail img {
+  height : 100%;
+}
+
+.thumbnail.lightboxed {
+  position  : absolute;
+  top       : 50%;
+  left      : 50%;
+  transform : translate(-50%, -50%);
+  height    : 80vh;
+}
