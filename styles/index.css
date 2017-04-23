@@ -1,3 +1,8 @@
+/*
+  NOTES --
+  Implicit dependency on animations.css (can be solved easily with the use of a CSS preprocessor)
+ */
+
 * {
   box-sizing  : border-box;
   font-family : Lato, sans-serif;
@@ -24,12 +29,6 @@ html, body {
   z-index        : 1;
   opacity        : 1;
   pointer-events : auto;
-}
-
-.slideboxed .main-content {
-  filter     : blur(5px) grayscale(.7);
-  opacity    : .3;
-  transition : filter, opacity .3s;
 }
 
 .slidebox.container {
@@ -79,18 +78,28 @@ html, body {
   width      : auto;
   height     : auto;
   position   : static;
-  padding    : 0 20px;
+  margin     : 0 20px;
   cursor     : pointer;
   z-index    : 2;
   transition : opacity .4s;
 }
 
 .slidebox.control:hover {
-  opacity : .5;
+  animation-name            : nav-hover;
+  animation-iteration-count : infinite;
+  animation-duration        : .5s;
+  animation-direction       : alternate;
+  animation-timing-function : ease-out;
 }
 
-.slidebox.control.prev {
+.slidebox.control.prev svg {
   transform: rotate(180deg);
+}
+
+.slideboxed .main-content {
+  filter     : blur(5px) grayscale(.7);
+  opacity    : .3;
+  transition : filter, opacity .3s;
 }
 
 .thumbnails {
